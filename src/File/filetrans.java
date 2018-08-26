@@ -8,8 +8,9 @@ public class filetrans {
 
   public static void main(String[] args) {
     System.out.println("Welcome to FileTransfer!");
-    String path = getPath(0);
-    int port = getPort();
+    filetrans ft = new filetrans();
+    String path = ft.getPath(0);
+    int port = ft.getPort();
     
     fileserver fileServer = new fileserver(port, path);
     fileclient fileClient = new fileclient(port, path);
@@ -37,8 +38,8 @@ public class filetrans {
      int port = 0;
      Scanner read = new Scanner(System.in);
      
-     System.out.print("Please Enter the port number: ");
-     port = read.nextInt();
+     //System.out.println("Please Enter the port number: ");
+     port = 5555;//Integer.parseInt(read.nextLine());
      
      read.close();
      return port;

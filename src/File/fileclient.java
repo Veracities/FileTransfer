@@ -10,6 +10,12 @@ public class fileclient {
   public fileclient(int port, String path) {
     portNum = port;
     cpath = path;
+    try {
+      fileclient.main(null);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
   
   public static void main(String[] args) throws Exception {
@@ -17,7 +23,7 @@ public class fileclient {
     // Byte array to store data during transfer
     byte b[] = new byte[4000];
     InputStream is = sr.getInputStream();
-    FileOutputStream fr = new FileOutputStream("D:\\");
+    FileOutputStream fr = new FileOutputStream("D:\\copied.txt");
     
     // Read data from byte array
     is.read(b,0,b.length);

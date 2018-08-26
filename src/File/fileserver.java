@@ -5,11 +5,17 @@ import java.net.*;
 
 public class fileserver {
   private int portNum;
-  private String spath;
+  private static String spath;
   
   public fileserver(int port, String path) {
     portNum = port;
     spath = path;
+    try {
+      fileserver.main(null);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
   
   public static void main(String[] args) throws Exception {
@@ -17,7 +23,7 @@ public class fileserver {
     // Accepting the connection from client
     Socket sr = s.accept();
     // Location of the file
-    FileInputStream fr = new FileInputStream("D://");
+    FileInputStream fr = new FileInputStream("D:\\testing.txt");
     // Byte Array to store the file during transfer
     byte b[] = new byte[4000];
     
