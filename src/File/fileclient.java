@@ -4,34 +4,31 @@ import java.io.*;
 import java.net.*;
 
 public class fileclient {
-  int portNum;
-  String cpath;
+  static String cpath = "D:\\copied.txt";
   
-  public fileclient(int port, String path) {
-    portNum = port;
+  public fileclient(String path) {
     cpath = path;
-    try {
-      fileclient.main(null);
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
   }
   
   public static void main(String[] args) throws Exception {
-    Socket sr = new Socket("localhost", 5643);
-    // Byte array to store data during transfer
-    byte b[] = new byte[4000];
-    InputStream is = sr.getInputStream();
-    FileOutputStream fr = new FileOutputStream("D:\\copied.txt");
+    //Initialize socket
+    Socket socket = new Socket("localhost", 5000);
+    byte[] content = new byte[10000];
     
-    // Read data from byte array
-    is.read(b,0,b.length);
-    // Write the file to the destination
-    fr.write(b,0,b.length);
-   
-    fr.close();
-    sr.close();
+    //Initialize the FileOutputStream to the output file's full path.
+    FileOutputStream fr = new FileOutputStream(cpath);
+    BufferedOutputStream br = new BufferedOutputStream(fr);
+    InputStream is = socket.getInputStream();
+    
+    //No of bytes read in one read() call
+    int bytesRead = 0; 
+    
+    while((bytesRead=is.read(content))!=-1)
+        br.write(content, 0, bytesRead); 
+    
+    br.flush(); 
+    socket.close(); 
+    System.out.println("File transferred successfully!");
   }
 
 }

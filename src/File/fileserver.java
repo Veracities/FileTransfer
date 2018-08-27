@@ -4,35 +4,36 @@ import java.io.*;
 import java.net.*;
 
 public class fileserver {
-  private int portNum;
-  private static String spath;
+   static String spath = "D:\\testing.txt";
   
-  public fileserver(int port, String path) {
-    portNum = port;
+  public fileserver(String path) {
     spath = path;
-    try {
-      fileserver.main(null);
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
   }
   
   public static void main(String[] args) throws Exception {
-    ServerSocket s = new ServerSocket(5643);
-    // Accepting the connection from client
+    // Initalize Socket
+    ServerSocket s = new ServerSocket(5000);
     Socket sr = s.accept();
+    
     // Location of the file
-    FileInputStream fr = new FileInputStream("D:\\testing.txt");
-    // Byte Array to store the file during transfer
-    byte b[] = new byte[4000];
+    File file = new File(spath);
+    FileInputStream fr = new FileInputStream(file);
+    BufferedInputStream br = new BufferedInputStream(fr);
     
-    fr.read(b,0, b.length);
-    // Convert byte array to a stream for transfer
     OutputStream os = sr.getOutputStream();
-    os.write(b,0,b.length);
     
-    fr.close();
+    //Read file into array
+    byte content[];
+    long fileLen = file.length();
+    int size = 10000;
+    content = new byte[size];
+    br.read(content,0,size);
+    os.write(content);
+    System.out.println("Sending file...");
+    
+    os.flush();
+    sr.close();
     s.close();
+    System.out.println("File Transferred");
   }
 }

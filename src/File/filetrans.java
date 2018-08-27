@@ -2,20 +2,18 @@ package File;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class filetrans {
 
   public static void main(String[] args) {
-    System.out.println("Welcome to FileTransfer!");
+    String path;
+    int port;
     filetrans ft = new filetrans();
-    String path = ft.getPath(0);
-    int port = ft.getPort();
-    
-    fileserver fileServer = new fileserver(port, path);
-    fileclient fileClient = new fileclient(port, path);
-    
-    
+    path = ft.getPath(0);
+    port = ft.getPort();
+    fileserver fileServer = new fileserver(path);
   }
   
   private String getPath(int option) {
@@ -29,19 +27,14 @@ public class filetrans {
     }
     path = read.nextLine();
     
-    
-    read.close();
     return path;
   }
   
   private int getPort() {
      int port = 0;
      Scanner read = new Scanner(System.in);
-     
-     //System.out.println("Please Enter the port number: ");
-     port = 5555;//Integer.parseInt(read.nextLine());
-     
-     read.close();
+     System.out.print("Please Enter the port number: ");
+     port = read.nextInt();
      return port;
   }
   
