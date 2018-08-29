@@ -17,7 +17,7 @@ public class FileX {
     System.out.println("Here are your options: ");
     System.out.println("Option 0: Make a new txt file");
     System.out.println("Option 1: Transfer a file from one location to another");
-    //System.out.println("");
+    System.out.println("Option 2: Sort then print files of the current directory");
     System.out.print("Please enter the option number: ");
     option = read.nextInt();
     if (option == 0) {
@@ -28,6 +28,9 @@ public class FileX {
     }
     if (option == 1) {
       fileserver.main(args);
+    }
+    if (option == 2) {
+      filesort.main(args);
     }
   }
   
