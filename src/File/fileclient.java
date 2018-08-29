@@ -3,32 +3,34 @@ package File;
 import java.io.*;
 import java.net.*;
 
-public class fileclient {
-  static String cpath = "D:\\copied.txt";
-  
-  public fileclient(String path) {
-    cpath = path;
+public class fileclient{
+  Socket sr;
+  public fileclient(int port, String host, String path) {
+    try {
+      sr = new Socket(host, port);
+      fileC(path);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   
-  public static void main(String[] args) throws Exception {
-    //Initialize socket
-    Socket socket = new Socket("localhost", 5000);
-    byte[] content = new byte[10000];
+  public void fileC(String path) throws IOException {
+    // Where to store the data when transfering
+    byte[] b = new byte[2002];
     
-    //Initialize the FileOutputStream to the output file's full path.
-    FileOutputStream fr = new FileOutputStream(cpath);
-    BufferedOutputStream br = new BufferedOutputStream(fr);
-    InputStream is = socket.getInputStream();
+    InputStream is = sr.getInputStream();
+    // Destination path
+    FileOutputStream fr = new FileOutputStream(path);
     
-    //No of bytes read in one read() call
-    int bytesRead = 0; 
+    // Read data from server then write to new file
+    is.read(b, 0,b.length);
+    fr.write(b, 0, b.length);
     
-    while((bytesRead=is.read(content))!=-1)
-        br.write(content, 0, bytesRead); 
-    
-    br.flush(); 
-    socket.close(); 
-    System.out.println("File transferred successfully!");
+    fr.close();
+    System.out.println("File transfer success!");
   }
-
+  
+  public static void main(String[] args) {
+    fileclient fc = new fileclient(5000,"localhost","D:\\copied.txt");
+  } 
 }

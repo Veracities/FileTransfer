@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileX {
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     Scanner read = new Scanner(System.in);
     FileX fileX = new FileX();
     int option;
+    
     System.out.println("Welcome to FileX!");
     System.out.println("Here are your options: ");
     System.out.println("Option 0: Make a new txt file");
@@ -19,11 +20,14 @@ public class FileX {
     //System.out.println("");
     System.out.print("Please enter the option number: ");
     option = read.nextInt();
-    if (option == 1) {
+    if (option == 0) {
       String name = "";
       System.out.print("What would you like to name your file: ");
       name = read.nextLine();
       fileX.makeNewTXT(name);
+    }
+    if (option == 1) {
+      fileserver.main(args);
     }
   }
   

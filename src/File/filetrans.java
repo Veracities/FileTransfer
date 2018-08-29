@@ -5,15 +5,15 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class filetrans {
-
+public class filetrans {  
   public static void main(String[] args) {
     String path;
-    int port;
+    int port = 5000;
     filetrans ft = new filetrans();
-    path = ft.getPath(0);
-    port = ft.getPort();
-    fileserver fileServer = new fileserver(path);
+    //String beginPath = ft.getPath(0);
+    //String endPath = ft.getPath(1);s
+    //port = ft.getPort();
+    fileserver fs = new fileserver(port);
   }
   
   private String getPath(int option) {

@@ -3,37 +3,43 @@ package File;
 import java.io.*;
 import java.net.*;
 
-public class fileserver {
-   static String spath = "D:\\testing.txt";
+public class fileserver extends Thread{
+  ServerSocket s;
   
-  public fileserver(String path) {
-    spath = path;
+  public fileserver(int port) {
+    try {
+      s = new ServerSocket(port);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   
-  public static void main(String[] args) throws Exception {
-    // Initalize Socket
-    ServerSocket s = new ServerSocket(5000);
-    Socket sr = s.accept();
+  public void run() {
+    while (true) {
+       try {
+         fileclient.main(null);
+         Socket sr = s.accept();
+         fileS(sr);
+       } catch (IOException e) {
+         e.printStackTrace();
+       }
+    } 
+  }
+  
+  public void fileS(Socket sr) throws IOException {
+    FileInputStream fr=new FileInputStream("D:\\testing.txt");
+    // Byte array to store data when transferring
+    byte b[]=new byte[4004];
     
-    // Location of the file
-    File file = new File(spath);
-    FileInputStream fr = new FileInputStream(file);
-    BufferedInputStream br = new BufferedInputStream(fr);
-    
+    fr.read(b, 0, b.length);
     OutputStream os = sr.getOutputStream();
+    os.write(b, 0, b.length);
     
-    //Read file into array
-    byte content[];
-    long fileLen = file.length();
-    int size = 10000;
-    content = new byte[size];
-    br.read(content,0,size);
-    os.write(content);
-    System.out.println("Sending file...");
-    
-    os.flush();
-    sr.close();
-    s.close();
-    System.out.println("File Transferred");
+    fr.close();
   }
+  
+  public static void main(String[] args) {
+    fileserver fs = new fileserver(5000);
+    fs.start();
+  } 
 }
